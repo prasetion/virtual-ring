@@ -7,9 +7,6 @@ import { GLTFLoader } from "three/examples/jsm/Addons.js";
 // canvas
 const canvas = document.querySelector("canvas.webgl");
 
-// debug
-// const gui = new GUI();
-
 // cursor
 const cursor = {
   x: 0,
@@ -27,7 +24,7 @@ const scene = new THREE.Scene();
 
 // environtment
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load("./textures/environmentMap/2k.hdr", (enviMap) => {
+rgbeLoader.load("./public/environmentMap/2k.hdr", (enviMap) => {
   enviMap.mapping = THREE.EquirectangularReflectionMapping;
   scene.background = enviMap;
   scene.environment = enviMap;
@@ -40,7 +37,7 @@ const loader = new GLTFLoader();
 // Load a glTF resource
 loader.load(
   // resource URL
-  "./models/car.glb",
+  "./public/models/car.glb",
   // called when the resource is loaded
   function (gltf) {
     scene.add(gltf.scene);
@@ -50,14 +47,6 @@ loader.load(
   // called when loading has errors
   (error) => console.log("An error happened")
 );
-
-// light
-// const ambientLigth = new THREE.AmbientLight(0xffffff, 1);
-// scene.add(ambientLigth);
-
-// const pointlight = new THREE.PointLight(0xffffff, 30);
-// pointlight.position.set(2, 3, 4);
-// scene.add(pointlight);
 
 window.addEventListener("keydown", (event) => {
   if (event.key == "h") gui.show(gui._hidden);
@@ -130,7 +119,6 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 renderer.setSize(sizes.width, sizes.height);
-const clock = new THREE.Clock();
 
 const tick = () => {
   // update controls
