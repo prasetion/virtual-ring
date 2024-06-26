@@ -24,7 +24,7 @@ const scene = new THREE.Scene();
 
 // environtment
 const rgbeLoader = new RGBELoader();
-rgbeLoader.load("./public/environmentMap/2k.hdr", (enviMap) => {
+rgbeLoader.load("/environmentMap/2k.hdr", (enviMap) => {
   enviMap.mapping = THREE.EquirectangularReflectionMapping;
   scene.background = enviMap;
   scene.environment = enviMap;
@@ -37,7 +37,7 @@ const loader = new GLTFLoader();
 // Load a glTF resource
 loader.load(
   // resource URL
-  "./public/models/car.glb",
+  "/models/car.glb",
   // called when the resource is loaded
   function (gltf) {
     scene.add(gltf.scene);
