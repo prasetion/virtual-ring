@@ -14,3 +14,11 @@ html,
 body {
   overflow: hidden;
 }
+
+button {
+  position: absolute;
+  background: red;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  padding: 10px;
+}

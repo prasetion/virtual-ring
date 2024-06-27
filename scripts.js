@@ -6,6 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/Addons.js";
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
+const buttonOpen = document.getElementById("open");
 
 // cursor
 const cursor = {
@@ -31,16 +32,20 @@ rgbeLoader.load("/environmentMap/2k.hdr", (enviMap) => {
 });
 
 // import gltf
-// Instantiate a loader
 const loader = new GLTFLoader();
 
-// Load a glTF resource
+let mixer;
+let animationClips;
+
 loader.load(
-  // resource URL
   "/models/car.glb",
-  // called when the resource is loaded
-  function (gltf) {
+  (gltf) => {
     scene.add(gltf.scene);
+
+    mixer = new THREE.AnimationMixer(gltf.scene);
+    animationClips = gltf.animations;
+    // const actions = mixer.clipAction(gltf.animations[1]);
+    // actions.play();
   },
   // called while loading is progressing
   (xhr) => console.log((xhr.loaded / xhr.total) * 100 + "% loaded"),
@@ -97,6 +102,14 @@ window.addEventListener("dblclick", () => {
   }
 });
 
+// event listner
+buttonOpen.addEventListener("click", () => {
+  console.log("open door");
+  const actions = mixer.clipAction(animationClips[1]);
+  actions.setLoop(THREE.LoopOnce);
+  actions.play();
+});
+
 // camera
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -120,9 +133,13 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(sizes.width, sizes.height);
 
+const clock = new THREE.Clock();
+
 const tick = () => {
   // update controls
   controls.update();
+
+  if (mixer) mixer.update(clock.getDelta());
 
   // render per frame
   renderer.render(scene, camera);
