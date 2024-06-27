@@ -7,6 +7,7 @@ import { GLTFLoader } from "three/examples/jsm/Addons.js";
 // canvas
 const canvas = document.querySelector("canvas.webgl");
 const buttonOpen = document.getElementById("open");
+const buttonAll = document.getElementById("all");
 
 // cursor
 const cursor = {
@@ -41,11 +42,13 @@ loader.load(
   "/models/car.glb",
   (gltf) => {
     scene.add(gltf.scene);
-
     mixer = new THREE.AnimationMixer(gltf.scene);
     animationClips = gltf.animations;
-    // const actions = mixer.clipAction(gltf.animations[1]);
-    // actions.play();
+
+    // // debug
+    // for (let index = 0; index < animationClips.length; index++) {
+    //   console.log(animationClips[index]);
+    // }
   },
   // called while loading is progressing
   (xhr) => console.log((xhr.loaded / xhr.total) * 100 + "% loaded"),
@@ -65,8 +68,6 @@ const sizes = {
 
 // event listener resize
 window.addEventListener("resize", () => {
-  console.log("window has been resized");
-
   // update sizes
   sizes.width = window.innerWidth;
   sizes.height = window.innerHeight;
@@ -82,8 +83,6 @@ window.addEventListener("resize", () => {
 
 // event listener dblclick
 window.addEventListener("dblclick", () => {
-  console.log("double click");
-
   const fullscreenElement =
     document.fullscreenElement || document.webkitFullscreenElement;
 
@@ -104,10 +103,16 @@ window.addEventListener("dblclick", () => {
 
 // event listner
 buttonOpen.addEventListener("click", () => {
-  console.log("open door");
   const actions = mixer.clipAction(animationClips[1]);
   actions.setLoop(THREE.LoopOnce);
-  actions.play();
+  actions.reset().play();
+});
+
+// event listner
+buttonAll.addEventListener("click", () => {
+  const actions = mixer.clipAction(animationClips[0]);
+  actions.setLoop(THREE.LoopOnce);
+  actions.reset().play();
 });
 
 // camera
