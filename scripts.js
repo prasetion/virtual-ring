@@ -6,8 +6,8 @@ import { GLTFLoader } from "three/examples/jsm/Addons.js";
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
-const buttonOpen = document.getElementById("open");
-const buttonAll = document.getElementById("all");
+// const buttonOpen = document.getElementById("open");
+// const buttonAll = document.getElementById("all");
 
 // cursor
 const cursor = {
@@ -39,7 +39,7 @@ let mixer;
 let animationClips;
 
 loader.load(
-  "/models/car.glb",
+  "/models/cincin.glb",
   (gltf) => {
     scene.add(gltf.scene);
     mixer = new THREE.AnimationMixer(gltf.scene);
@@ -101,19 +101,19 @@ window.addEventListener("dblclick", () => {
   }
 });
 
-// event listner
-buttonOpen.addEventListener("click", () => {
-  const actions = mixer.clipAction(animationClips[1]);
-  actions.setLoop(THREE.LoopOnce);
-  actions.reset().play();
-});
+// // event listner
+// buttonOpen.addEventListener("click", () => {
+//   const actions = mixer.clipAction(animationClips[1]);
+//   actions.setLoop(THREE.LoopOnce);
+//   actions.reset().play();
+// });
 
-// event listner
-buttonAll.addEventListener("click", () => {
-  const actions = mixer.clipAction(animationClips[0]);
-  actions.setLoop(THREE.LoopOnce);
-  actions.reset().play();
-});
+// // event listner
+// buttonAll.addEventListener("click", () => {
+//   const actions = mixer.clipAction(animationClips[0]);
+//   actions.setLoop(THREE.LoopOnce);
+//   actions.reset().play();
+// });
 
 // camera
 const camera = new THREE.PerspectiveCamera(
@@ -123,8 +123,8 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
-camera.position.z = 4;
-camera.position.y = 1;
+camera.position.z = 0.05;
+camera.position.y = 0.02;
 scene.add(camera);
 
 // controls
